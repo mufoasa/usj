@@ -57,6 +57,40 @@ body {
   color: #1e3a8a;
 }
 
+/* Cart Link in Header */
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.cart-link:hover {
+  color: #1e3a8a;
+}
+
+.cart-count {
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 20px;
+}
+
+.cart-count:empty {
+  display: none;
+}
+
 .language-switcher select {
   background: #1e3a8a;
   color: white;
