@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const languageSelect = document.getElementById("languageSelect")
   const body = document.body
 
-  // Define ShoppingCart class if not already defined
+  // Declare the ShoppingCart class
   class ShoppingCart {
     constructor() {
       this.items = []
@@ -13,8 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addItem(product) {
       this.items.push(product)
-      console.log(`${product.name} added to cart!`)
     }
+  }
+
+  // Use the global cart instance or create one if it doesn't exist
+  const cart = window.cart || new ShoppingCart()
+  if (!window.cart) {
+    window.cart = cart
   }
 
   // Initialize language
@@ -110,13 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  // Add to cart functionality
+  // Add to cart functionality - FIXED VERSION
   const addToCartButtons = document.querySelectorAll(".product-btn")
 
-  // Shopping cart integration
-  const cart = window.cart || new ShoppingCart()
-
-  // Update the add to cart functionality
   addToCartButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const productCard = button.closest(".product-card")
@@ -124,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const productPrice = productCard.querySelector(".product-price").textContent
       const productImage = productCard.querySelector(".product-image img").src
 
-      // Create product object
+      // Create product object with unique ID
       const product = {
         id: `product-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         name: productName,
@@ -132,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         image: productImage,
       }
 
-      // Add to cart
+      // Add to cart using the global cart instance
       cart.addItem(product)
 
       // Get current language for success message
@@ -140,11 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const message = currentLang === "en" ? `${productName} added to cart!` : `${productName} u shtua në shportë!`
 
       // Visual feedback
+      const originalText = button.textContent
       button.textContent = currentLang === "en" ? "Added!" : "U Shtua!"
       button.style.background = "#10b981"
 
       setTimeout(() => {
-        button.textContent = currentLang === "en" ? "Add to Cart" : "Shto në Shportë"
+        button.textContent = originalText
         button.style.background = "#1e3a8a"
       }, 2000)
 
